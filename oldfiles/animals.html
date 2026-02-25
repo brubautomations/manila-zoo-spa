@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Animals | Manila Zoo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: #faf9f6;
+            color: #111;
+            padding-top: 100px;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 25px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid #e2e8f0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #111;
+            text-decoration: none;
+        }
+
+        .logo-leaf {
+            color: #10b981;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: #4a5568;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 800;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+
+        .nav-link:hover,
+        .active-link {
+            color: #10b981;
+        }
+
+        .btn-ticket {
+            background: #10b981;
+            color: #fff;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 800;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: 0.3s;
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+        }
+
+        .page-header {
+            padding: 60px 60px 20px 60px;
+            text-align: center;
+        }
+
+        .page-title {
+            font-size: 54px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 15px;
+            color: #111;
+        }
+
+        .page-desc {
+            color: #4a5568;
+            font-size: 16px;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+            font-weight: 600;
+        }
+
+        .section-animals {
+            padding: 40px 60px 100px 60px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .animal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+        }
+
+        .animal-card {
+            background: #fff;
+            border-radius: 20px;
+            overflow: hidden;
+            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .animal-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(16, 185, 129, 0.5);
+        }
+
+        .animal-img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+        }
+
+        .animal-data {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            background: #fff;
+        }
+
+        .status-badge {
+            align-self: flex-start;
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 15px;
+        }
+
+        .status-critical {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .status-endangered {
+            background: rgba(249, 115, 22, 0.1);
+            color: #f97316;
+            border: 1px solid rgba(249, 115, 22, 0.3);
+        }
+
+        .status-vulnerable {
+            background: rgba(245, 158, 11, 0.1);
+            color: #d97706;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .animal-name {
+            font-size: 28px;
+            font-weight: 800;
+            color: #111;
+            margin-bottom: 5px;
+        }
+
+        .animal-sci {
+            font-size: 13px;
+            color: #10b981;
+            font-style: italic;
+            margin-bottom: 20px;
+            font-family: monospace;
+            font-weight: 600;
+        }
+
+        .animal-specs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 20px;
+            margin-top: auto;
+        }
+
+        .spec-label {
+            font-size: 10px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+            font-weight: 800;
+        }
+
+        .spec-val {
+            font-size: 14px;
+            color: #111;
+            font-weight: 800;
+        }
+
+        /* MASKED AI BUTTON CSS */
+        #ai-ranger-btn {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            background: #10b981;
+            color: #fff;
+            padding: 18px 36px;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 14px;
+            cursor: pointer;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: 0.3s;
+            text-transform: uppercase;
+            border: 2px solid #fff;
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.5);
+        }
+
+        #ai-ranger-btn.active {
+            background: #059669;
+        }
+
+        .pulse-dot {
+            width: 12px;
+            height: 12px;
+            background: #ffffff;
+            border-radius: 50%;
+        }
+
+        .pulse-idle {
+            animation: pulse 1.5s infinite;
+        }
+
+        .pulse-speaking {
+            background: #fff !important;
+            animation: pulseFast 0.5s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.8);
+            }
+
+            70% {
+                box-shadow: 0 0 0 15px rgba(255, 255, 255, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+            }
+        }
+
+        @keyframes pulseFast {
+            0% {
+                transform: scale(0.8);
+            }
+
+            100% {
+                transform: scale(1.3);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="logo"><span class="logo-leaf">🌿</span> MANILA ZOO</a>
+        <div class="nav-links">
+            <a href="animals.html" class="nav-link active-link" style="color:#10b981;">Our Animals</a>
+            <a href="map.html" class="nav-link">Interactive Map</a>
+            <a href="conservation.html" class="nav-link">Conservation</a>
+            <a href="tickets.html" class="nav-ticket btn-ticket">Buy Tickets</a>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <h1 class="page-title">Wildlife Directory</h1>
+        <p class="page-desc">Explore the diverse species that call Manila Zoo home. Learn about their habitats and
+            conservation efforts.</p>
+    </header>
+
+    <section class="section-animals">
+        <div class="animal-grid" id="grid">
+            <div class="animal-card"><img
+                    src="https://upload.wikimedia.org/wikipedia/commons/c/c9/Philippine_Eagle_%28Pithecophaga_jefferyi%29.jpg"
+                    class="animal-img">
+                <div class="animal-data">
+                    <div class="status-badge status-critical">Critically Endangered</div>
+                    <div class="animal-name">Philippine Eagle</div>
+                    <div class="animal-specs">
+                        <div class="spec-item"><span class="spec-label">Zone</span><span class="spec-val">Zone 3:
+                                Aviary</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="animal-card"><img
+                    src="https://upload.wikimedia.org/wikipedia/commons/3/36/Tamaraw_Mindoro_Dwarf_Buffalo.jpg"
+                    class="animal-img">
+                <div class="animal-data">
+                    <div class="status-badge status-critical">Critically Endangered</div>
+                    <div class="animal-name">Tamaraw</div>
+                    <div class="animal-specs">
+                        <div class="spec-item"><span class="spec-label">Zone</span><span class="spec-val">Zone 5:
+                                Savanna</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="animal-card"><img
+                    src="https://upload.wikimedia.org/wikipedia/commons/8/82/Saltwater_Crocodile_at_Cairns.jpg"
+                    class="animal-img">
+                <div class="animal-data">
+                    <div class="status-badge status-vulnerable">Vulnerable</div>
+                    <div class="animal-name">Saltwater Crocodile</div>
+                    <div class="animal-specs">
+                        <div class="spec-item"><span class="spec-label">Zone</span><span class="spec-val">Zone 8:
+                                Reptiles</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="animal-card"><img
+                    src="https://upload.wikimedia.org/wikipedia/commons/3/37/Asian_Elephant_in_a_dry_forest.jpg"
+                    class="animal-img">
+                <div class="animal-data">
+                    <div class="status-badge status-endangered">Endangered</div>
+                    <div class="animal-name">Asian Elephant</div>
+                    <div class="animal-specs">
+                        <div class="spec-item"><span class="spec-label">Zone</span><span class="spec-val">Zone 1:
+                                Elephants</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="animal-card"><img
+                    src="https://upload.wikimedia.org/wikipedia/commons/7/73/Lion_waiting_in_Namibia.jpg"
+                    class="animal-img">
+                <div class="animal-data">
+                    <div class="status-badge status-vulnerable">Vulnerable</div>
+                    <div class="animal-name">African Lion</div>
+                    <div class="animal-specs">
+                        <div class="spec-item"><span class="spec-label">Zone</span><span class="spec-val">Zone 6:
+                                Predators</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="animal-card"><img
+                    src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Giraffe_Mikumi_National_Park.jpg"
+                    class="animal-img">
+                <div class="animal-data">
+                    <div class="status-badge status-endangered">Endangered</div>
+                    <div class="animal-name">Reticulated Giraffe</div>
+                    <div class="animal-specs">
+                        <div class="spec-item"><span class="spec-label">Zone</span><span class="spec-val">Zone 5:
+                                Savanna</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="animal-card"><img src="https://upload.wikimedia.org/wikipedia/commons/8/8b/Zebras_Etosha.jpg"
+                    class="animal-img">
+                <div class="animal-data">
+                    <div class="status-badge status-vulnerable">Vulnerable</div>
+                    <div class="animal-name">Plains Zebra</div>
+                    <div class="animal-specs">
+                        <div class="spec-item"><span class="spec-label">Zone</span><span class="spec-val">Zone 5:
+                                Savanna</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="animal-card"><img
+                    src="https://upload.wikimedia.org/wikipedia/commons/f/f2/Hippopotamus_amphibius_in_Tanzania.jpg"
+                    class="animal-img">
+                <div class="animal-data">
+                    <div class="status-badge status-vulnerable">Vulnerable</div>
+                    <div class="animal-name">Hippopotamus</div>
+                    <div class="animal-specs">
+                        <div class="spec-item"><span class="spec-label">Zone</span><span class="spec-val">Zone 2: Hippo
+                                Pools</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="animal-card"><img
+                    src="https://upload.wikimedia.org/wikipedia/commons/c/c2/Crab-eating_macaque_-_Macaca_fascicularis.jpg"
+                    class="animal-img">
+                <div class="animal-data">
+                    <div class="status-badge status-endangered">Endangered</div>
+                    <div class="animal-name">Long-tailed Macaque</div>
+                    <div class="animal-specs">
+                        <div class="spec-item"><span class="spec-label">Zone</span><span class="spec-val">Zone 14:
+                                Primates</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <button id="ai-ranger-btn">
+        <div class="pulse-dot pulse-idle"></div> <span id="btn-text">Talk to AI Ranger</span>
+    </button>
+
+    <script type="module">
+        import { Conversation } from 'https://cdn.jsdelivr.net/npm/@11labs/client/+esm';
+        let session = null;
+        let isConnected = false;
+        const btn = document.getElementById('ai-ranger-btn');
+        const dot = btn.querySelector('.pulse-dot');
+        const text = document.getElementById('btn-text');
+
+        btn.onclick = async () => {
+            if (isConnected) { if (session) { await session.endSession(); session = null; } return; }
+            text.innerText = "Connecting...";
+            try {
+                await navigator.mediaDevices.getUserMedia({ audio: true });
+                session = await Conversation.startSession({
+                    agentId: 'agent_4101kj9n39wqfv7v5ryfjav51mkv',
+                    onConnect: () => { isConnected = true; btn.classList.add('active'); text.innerText = "Connected"; dot.className = 'pulse-dot pulse-idle'; },
+                    onDisconnect: () => { isConnected = false; btn.classList.remove('active'); text.innerText = "Talk to AI Ranger"; dot.className = 'pulse-dot pulse-idle'; session = null; },
+                    onModeChange: (mode) => { if (mode.mode === 'speaking') { dot.className = 'pulse-dot pulse-speaking'; text.innerText = "Ranger Speaking"; } else { dot.className = 'pulse-dot pulse-idle'; text.innerText = "Listening..."; } },
+                    clientTools: {
+                        Maps_tab: (params) => {
+                            const tab = params.tab_name;
+                            const routes = { 'OUR ANIMALS': 'animals.html', 'INTERACTIVE MAP': 'map.html', 'CONSERVATION': 'conservation.html', 'BUY TICKETS': 'tickets.html' };
+                            if (routes[tab]) window.location.href = routes[tab];
+                            return "Success";
+                        }
+                    }
+                });
+            } catch (err) { text.innerText = "Talk to AI Ranger"; }
+        };
+    </script>
+</body>
+
+</html>

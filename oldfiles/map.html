@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Map | Manila Zoo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: #050b07;
+            height: 100vh;
+            overflow: hidden;
+            color: #ffffff;
+        }
+
+        /* Navbar Fixed */
+        .navbar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 25px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            background: rgba(5, 11, 7, 0.9);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .logo-leaf {
+            color: #10b981;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: #e2e8f0;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+
+        .nav-link:hover,
+        .active-link {
+            color: #10b981;
+        }
+
+        .btn-ticket {
+            background: #10b981;
+            color: #fff;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-decoration: none;
+            transition: 0.3s;
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+        }
+
+        .app-layout {
+            display: flex;
+            height: 100vh;
+            padding-top: 80px;
+        }
+
+        .sidebar {
+            width: 420px;
+            background: #08120c;
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            overflow-y: auto;
+            z-index: 10;
+            box-shadow: 20px 0 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: #10b981;
+            border-radius: 10px;
+        }
+
+        .sidebar-title {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 30px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sidebar-title::before {
+            content: '';
+            width: 12px;
+            height: 12px;
+            background: #10b981;
+            border-radius: 50%;
+        }
+
+        .zone-list {
+            list-style: none;
+        }
+
+        .zone-item {
+            padding: 18px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .zone-item:hover,
+        .zone-item.active {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: rgba(16, 185, 129, 0.5);
+            transform: translateX(10px);
+        }
+
+        .zone-name {
+            font-size: 15px;
+            font-weight: 800;
+            margin-bottom: 5px;
+            color: #fff;
+        }
+
+        .zone-desc {
+            font-size: 12px;
+            color: #94a3b8;
+            line-height: 1.4;
+        }
+
+        .map-container {
+            flex: 1;
+            position: relative;
+            background: #e8e3d9;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .map-wrapper {
+            position: relative;
+            height: 95%;
+            aspect-ratio: 1.5;
+            transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .map-bg {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .pin {
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            background: #10b981;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.9);
+            transition: 0.3s;
+            z-index: 5;
+            border: 2px solid #fff;
+        }
+
+        .pin::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border: 3px solid rgba(16, 185, 129, 0.7);
+            border-radius: 50%;
+            animation: ping 2s infinite;
+        }
+
+        @keyframes ping {
+
+            75%,
+            100% {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+
+        .pin:hover,
+        .pin.active-pin {
+            transform: translate(-50%, -50%) scale(1.4);
+            background: #fff;
+            z-index: 10;
+        }
+
+        #pin-aviary {
+            top: 21%;
+            left: 45%;
+        }
+
+        #pin-savanna {
+            top: 28%;
+            left: 72%;
+        }
+
+        #pin-predators {
+            top: 29%;
+            left: 59.5%;
+        }
+
+        #pin-hippos {
+            top: 34%;
+            left: 40.5%;
+        }
+
+        #pin-primates {
+            top: 40%;
+            left: 26%;
+        }
+
+        #pin-elephants {
+            top: 60%;
+            left: 65%;
+        }
+
+        #pin-island {
+            top: 52%;
+            left: 49%;
+        }
+
+        #pin-reptiles {
+            top: 31%;
+            left: 23%;
+        }
+
+        .map-popup {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            width: 320px;
+            background: rgba(5, 11, 7, 0.95);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            border-radius: 15px;
+            padding: 25px;
+            opacity: 0;
+            transform: translateY(-20px);
+            pointer-events: none;
+            transition: 0.4s;
+            z-index: 20;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .map-popup.show {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .popup-title {
+            font-size: 20px;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+
+        .popup-animals {
+            font-size: 12px;
+            color: #10b981;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .popup-desc {
+            font-size: 13px;
+            color: #cbd5e1;
+            line-height: 1.5;
+        }
+
+        /* MASKED AI RANGER BUTTON */
+        #ai-ranger-btn {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            background: rgba(16, 185, 129, 0.95);
+            border: 2px solid #fff;
+            color: #fff;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 14px;
+            cursor: pointer;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.6);
+        }
+
+        #ai-ranger-btn:hover {
+            background: #059669;
+            transform: scale(1.05);
+        }
+
+        #ai-ranger-btn.active {
+            background: #fff;
+            color: #10b981;
+            border: 2px solid #10b981;
+        }
+
+        .pulse-dot {
+            width: 12px;
+            height: 12px;
+            background: #ffffff;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+
+        .pulse-idle {
+            animation: pulseAnim 1.5s infinite;
+        }
+
+        .pulse-speaking {
+            background: #10b981 !important;
+            animation: pulseFast 0.5s infinite alternate;
+        }
+
+        .pulse-listening {
+            background: #d97706 !important;
+            animation: none;
+        }
+
+        @keyframes pulseAnim {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.8);
+            }
+
+            70% {
+                box-shadow: 0 0 0 15px rgba(255, 255, 255, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+            }
+        }
+
+        @keyframes pulseFast {
+            0% {
+                transform: scale(0.8);
+            }
+
+            100% {
+                transform: scale(1.3);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="logo"><span class="logo-leaf">🌿</span> MANILA ZOO</a>
+        <div class="nav-links">
+            <a href="animals.html" class="nav-link">Our Animals</a>
+            <a href="map.html" class="nav-link active-link" style="color:#10b981;">Interactive Map</a>
+            <a href="conservation.html" class="nav-link">Conservation</a>
+            <a href="tickets.html" class="nav-ticket btn-ticket">Buy Tickets</a>
+        </div>
+    </nav>
+
+    <div class="app-layout">
+        <aside class="sidebar">
+            <h2 class="sidebar-title">Explore Zones</h2>
+            <ul class="zone-list">
+                <li class="zone-item" onclick="showZone('aviary')">
+                    <div class="zone-name">Zone 3: The Aviary</div>
+                    <div class="zone-desc">Massive glass dome housing endemic Philippine Eagles.</div>
+                </li>
+                <li class="zone-item" onclick="showZone('savanna')">
+                    <div class="zone-name">Zone 5: Savanna</div>
+                    <div class="zone-desc">Open plains hosting Zebras and Giraffes.</div>
+                </li>
+                <li class="zone-item" onclick="showZone('predators')">
+                    <div class="zone-name">Zone 6: Apex Predators</div>
+                    <div class="zone-desc">The big cats territory, featuring Lions.</div>
+                </li>
+                <li class="zone-item" onclick="showZone('hippos')">
+                    <div class="zone-name">Zone 2: Hippo Pools</div>
+                    <div class="zone-desc">Aquatic viewing areas for our Hippopotamus family.</div>
+                </li>
+                <li class="zone-item" onclick="showZone('primates')">
+                    <div class="zone-name">Zone 14: Primates</div>
+                    <div class="zone-desc">Lush jungle environment with climbing structures.</div>
+                </li>
+                <li class="zone-item" onclick="showZone('elephants')">
+                    <div class="zone-name">Zone 1: Elephants</div>
+                    <div class="zone-desc">Expansive sanctuary grounds for gentle giants.</div>
+                </li>
+                <li class="zone-item" onclick="showZone('island')">
+                    <div class="zone-name">Zone 13: Center Island</div>
+                    <div class="zone-desc">Botanical lagoon featuring interactive fountains.</div>
+                </li>
+                <li class="zone-item" onclick="showZone('reptiles')">
+                    <div class="zone-name">Zone 8 & 11: Reptiles</div>
+                    <div class="zone-desc">Swamp habitats for Crocodiles and Serpents.</div>
+                </li>
+            </ul>
+        </aside>
+        <main class="map-container">
+            <div class="map-wrapper" id="map-wrapper">
+                <img src="map-3d.jpg" class="map-bg" alt="3D Manila Zoo Map">
+                <div class="pin" id="pin-aviary" onclick="showZone('aviary')"></div>
+                <div class="pin" id="pin-savanna" onclick="showZone('savanna')"></div>
+                <div class="pin" id="pin-predators" onclick="showZone('predators')"></div>
+                <div class="pin" id="pin-hippos" onclick="showZone('hippos')"></div>
+                <div class="pin" id="pin-primates" onclick="showZone('primates')"></div>
+                <div class="pin" id="pin-elephants" onclick="showZone('elephants')"></div>
+                <div class="pin" id="pin-island" onclick="showZone('island')"></div>
+                <div class="pin" id="pin-reptiles" onclick="showZone('reptiles')"></div>
+            </div>
+            <div class="map-popup" id="info-popup">
+                <div class="popup-title" id="popup-title">Zone Name</div>
+                <div class="popup-animals" id="popup-animals">Key Species</div>
+                <div class="popup-desc" id="popup-desc">Zone description goes here.</div>
+            </div>
+        </main>
+    </div>
+
+    <button id="ai-ranger-btn">
+        <div class="pulse-dot pulse-idle"></div> <span id="btn-text">Ask AI Ranger</span>
+    </button>
+
+    <script type="module">
+        import { Conversation } from 'https://cdn.jsdelivr.net/npm/@11labs/client/+esm';
+        let session = null;
+        let isConnected = false;
+        const btn = document.getElementById('ai-ranger-btn');
+        const dot = btn.querySelector('.pulse-dot');
+        const text = document.getElementById('btn-text');
+
+        const zoneData = {
+            'aviary': { title: 'Zone 3: The Aviary', animals: 'Philippine Eagle, Macaws', desc: 'Walk through the massive canopy dome.' },
+            'savanna': { title: 'Zone 5: Savanna', animals: 'Zebras, Giraffes', desc: 'A wide expanse mimicking African plains.' },
+            'predators': { title: 'Zone 6: Apex Predators', animals: 'Lions, Hyenas', desc: 'Glass-fronted viewing areas for big cats.' },
+            'hippos': { title: 'Zone 2: Hippo Pools', animals: 'Hippopotamus', desc: 'Watch these massive river horses glide.' },
+            'primates': { title: 'Zone 14: Primates', animals: 'Macaques, Lemurs', desc: 'Multi-level jungle gyms for our primates.' },
+            'elephants': { title: 'Zone 1: Elephants', animals: 'Asian Elephants', desc: 'A peaceful grassland sanctuary.' },
+            'island': { title: 'Zone 13: Center Island', animals: 'Koi, Botanical Life', desc: 'Enjoy the interactive fountain.' },
+            'reptiles': { title: 'Zone 8 & 11: Reptiles', animals: 'Crocodiles, Pythons', desc: 'Explore the outdoor wetlands.' }
+        };
+
+        window.showZone = function (zoneId) {
+            const popup = document.getElementById('info-popup');
+            const data = zoneData[zoneId];
+            if (!data) return;
+            document.getElementById('popup-title').innerText = data.title;
+            document.getElementById('popup-animals').innerText = data.animals;
+            document.getElementById('popup-desc').innerText = data.desc;
+            popup.classList.add('show');
+            document.querySelectorAll('.pin').forEach(p => p.classList.remove('active-pin'));
+            document.getElementById('pin-' + zoneId).classList.add('active-pin');
+            return "Displaying " + data.title;
+        };
+
+        btn.onclick = async () => {
+            if (isConnected) { if (session) { await session.endSession(); session = null; } return; }
+            text.innerText = "Connecting...";
+            try {
+                await navigator.mediaDevices.getUserMedia({ audio: true });
+                session = await Conversation.startSession({
+                    agentId: 'agent_4101kj9n39wqfv7v5ryfjav51mkv',
+                    onConnect: () => { isConnected = true; btn.classList.add('active'); text.innerText = "Connected"; dot.className = 'pulse-dot pulse-listening'; },
+                    onDisconnect: () => { isConnected = false; btn.classList.remove('active'); text.innerText = "Ask AI Ranger"; dot.className = 'pulse-dot pulse-idle'; session = null; },
+                    onModeChange: (mode) => { if (mode.mode === 'speaking') { dot.className = 'pulse-dot pulse-speaking'; text.innerText = "Ranger Speaking"; } else { dot.className = 'pulse-dot pulse-listening'; text.innerText = "Listening..."; } },
+                    clientTools: {
+                        Maps_tab: (parameters) => {
+                            const tab = parameters.tab_name;
+                            const routes = { 'OUR ANIMALS': 'animals.html', 'INTERACTIVE MAP': 'map.html', 'CONSERVATION': 'conservation.html', 'BUY TICKETS': 'tickets.html' };
+                            if (routes[tab]) window.location.href = routes[tab];
+                            return "Navigating to " + tab;
+                        },
+                        update_map: (params) => { return window.showZone(params.zone_id); }
+                    }
+                });
+            } catch (err) { alert("Microphone required."); text.innerText = "Ask AI Ranger"; }
+        };
+    </script>
+</body>
+
+</html>
