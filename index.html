@@ -180,6 +180,30 @@
             box-shadow: 0 15px 30px rgba(16, 185, 129, 0.4);
         }
 
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            z-index: 2001;
+        }
+
+        .mobile-menu-btn span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: #e2e8f0;
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+
+        body.theme-light .mobile-menu-btn span {
+            background: #111;
+        }
+
         /* --- NAVBAR BUG FIX: Force black text on white pages --- */
         body.theme-light .navbar {
             background: rgba(255, 255, 255, 0.95);
@@ -782,8 +806,8 @@
         }
 
         #pin-savanna {
-            top: 37%;
-            left: 68%;
+            top: 28%;
+            left: 55%;
         }
 
         #pin-predators {
@@ -802,8 +826,8 @@
         }
 
         #pin-elephants {
-            top: 65%;
-            left: 62%;
+            top: 55%;
+            left: 52%;
         }
 
         #pin-island {
@@ -854,6 +878,21 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-bottom: 15px;
+        }
+
+        .popup-close {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            font-size: 22px;
+            color: #94a3b8;
+            cursor: pointer;
+            line-height: 1;
+            transition: 0.2s;
+        }
+
+        .popup-close:hover {
+            color: #fff;
         }
 
         .popup-desc {
@@ -1134,6 +1173,42 @@
             }
         }
 
+        /* --- TIMELINE SLOT STYLES --- */
+        .slot-time {
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #10b981;
+            margin-bottom: 4px;
+        }
+
+        .slot-event {
+            font-size: 16px;
+            font-weight: 800;
+            color: #111;
+            margin-bottom: 4px;
+        }
+
+        .slot-reason {
+            font-size: 13px;
+            color: #4a5568;
+            line-height: 1.5;
+            font-weight: 600;
+        }
+
+        .time-slot::before {
+            content: '';
+            position: absolute;
+            left: -28px;
+            top: 4px;
+            width: 12px;
+            height: 12px;
+            background: #10b981;
+            border-radius: 50%;
+            border: 3px solid #f4fdf8;
+        }
+
         /* Animal Track Physics */
         #animal-track {
             position: fixed;
@@ -1253,6 +1328,361 @@
             transform: scale(1.05);
         }
 
+        /* ==========================================================================
+           MOBILE RESPONSIVE
+           ========================================================================== */
+        @media (max-width: 768px) {
+
+            /* --- Navbar --- */
+            .navbar {
+                padding: 12px 16px;
+            }
+
+            .mobile-menu-btn {
+                display: flex;
+            }
+
+            .nav-links {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: rgba(5, 11, 7, 0.97);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 25px;
+                z-index: 2000;
+            }
+
+            .nav-links.mobile-open {
+                display: flex;
+            }
+
+            .nav-links.mobile-open .nav-link {
+                color: #e2e8f0 !important;
+                font-size: 20px;
+            }
+
+            .nav-links.mobile-open .btn-ticket {
+                font-size: 16px;
+                padding: 14px 32px;
+            }
+
+            .manila-font {
+                font-size: 24px !important;
+            }
+
+            .logo .manila-font {
+                font-size: 24px !important;
+            }
+
+            /* --- Hero --- */
+            .hero-container {
+                height: 90vh;
+                padding: 0 16px;
+            }
+
+            .hero-subtitle {
+                font-size: 12px;
+                letter-spacing: 2px;
+            }
+
+            .hero-title {
+                font-size: 28px;
+                letter-spacing: -1px;
+            }
+
+            .hero-title .manila-font {
+                font-size: 52px !important;
+            }
+
+            .hero-desc {
+                font-size: 14px;
+                margin-bottom: 25px;
+            }
+
+            .hero-btn {
+                padding: 14px 28px !important;
+                font-size: 13px !important;
+            }
+
+            /* --- App / Contact Section --- */
+            .app-section {
+                flex-direction: column;
+                padding: 40px 16px;
+                gap: 30px;
+            }
+
+            .app-contact-info {
+                max-width: 100%;
+                text-align: center;
+                align-items: center;
+            }
+
+            .contact-item {
+                justify-content: center;
+            }
+
+            .phone-mockup {
+                transform: rotate(0deg);
+                width: 200px;
+                height: 400px;
+            }
+
+            .phone-mockup:hover {
+                transform: rotate(0deg) translateY(-5px);
+            }
+
+            .app-content {
+                text-align: center;
+                max-width: 100%;
+            }
+
+            .app-content h2 {
+                font-size: 26px;
+            }
+
+            .app-content p {
+                font-size: 14px;
+            }
+
+            .store-badges {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .store-badge {
+                height: 40px;
+            }
+
+            /* --- Animals Page --- */
+            .page-header {
+                padding: 90px 16px 16px 16px;
+            }
+
+            .page-title {
+                font-size: 28px;
+            }
+
+            .page-desc {
+                font-size: 14px;
+            }
+
+            .section-animals {
+                padding: 16px;
+            }
+
+            .animal-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .animal-card:hover {
+                transform: none;
+            }
+
+            .animal-img {
+                height: 200px;
+            }
+
+            .animal-data {
+                padding: 16px;
+            }
+
+            .animal-name {
+                font-size: 20px;
+            }
+
+            /* --- Map View --- */
+            .app-layout {
+                flex-direction: column;
+                height: auto;
+                padding-top: 70px;
+            }
+
+            .sidebar {
+                width: 100%;
+                max-height: 30vh;
+                padding: 16px;
+                box-shadow: none;
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            }
+
+            .sidebar-title {
+                font-size: 18px;
+                margin-bottom: 15px;
+            }
+
+            .zone-item {
+                padding: 12px;
+                margin-bottom: 8px;
+            }
+
+            .zone-item:hover {
+                transform: none;
+            }
+
+            .map-container {
+                min-height: 55vh;
+                padding: 10px;
+            }
+
+            .map-popup {
+                top: 10px;
+                right: 10px;
+                left: 10px;
+                width: auto;
+                padding: 16px;
+                border-radius: 12px;
+            }
+
+            .popup-title {
+                font-size: 16px;
+            }
+
+            .popup-close {
+                top: 8px;
+                right: 12px;
+            }
+
+            .pin {
+                width: 16px;
+                height: 16px;
+            }
+
+            .pin::after {
+                top: -6px;
+                left: -6px;
+                right: -6px;
+                bottom: -6px;
+                border-width: 2px;
+            }
+
+            /* --- Conservation --- */
+            .mission-grid {
+                padding: 16px;
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .mission-card:hover {
+                transform: none;
+            }
+
+            .mission-img {
+                height: 180px;
+            }
+
+            .mission-content {
+                padding: 20px;
+            }
+
+            /* --- Tickets --- */
+            .container {
+                flex-direction: column;
+                padding: 90px 16px 40px 16px;
+                gap: 20px;
+            }
+
+            .tickets-section {
+                padding: 20px;
+            }
+
+            .ai-section {
+                flex: none;
+                padding: 20px;
+            }
+
+            .section-title {
+                font-size: 22px;
+                margin-bottom: 20px;
+            }
+
+            .ticket-card {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .ticket-price {
+                font-size: 20px;
+            }
+
+            .ai-textarea {
+                height: 80px;
+                font-size: 14px;
+            }
+
+            .timeline {
+                margin-top: 40px;
+            }
+
+            /* --- AI Ranger Button --- */
+            #ai-ranger-btn {
+                bottom: 16px;
+                right: 16px;
+                padding: 10px 18px;
+                font-size: 11px;
+                gap: 8px;
+            }
+
+            /* --- Hide decorative elements --- */
+            #animal-track {
+                display: none;
+            }
+
+            .falling-leaf {
+                display: none;
+            }
+        }
+
+        /* ==========================================================================
+           EXTRA SMALL SCREENS (< 400px)
+           ========================================================================== */
+        @media (max-width: 400px) {
+            .hero-title {
+                font-size: 24px;
+            }
+
+            .hero-title .manila-font {
+                font-size: 42px !important;
+            }
+
+            .hero-subtitle {
+                font-size: 10px;
+            }
+
+            .phone-mockup {
+                width: 170px;
+                height: 340px;
+            }
+
+            .app-content h2 {
+                font-size: 22px;
+            }
+
+            .page-title {
+                font-size: 24px;
+            }
+
+            .animal-img {
+                height: 160px;
+            }
+
+            .section-title {
+                font-size: 20px;
+            }
+
+            #ai-ranger-btn {
+                padding: 8px 14px;
+                font-size: 10px;
+            }
+        }
+
         #ai-ranger-btn.active {
             background: #fff;
             color: #10b981;
@@ -1314,12 +1744,15 @@
             <span class="logo-leaf">🌿</span>
             <span class="manila-font" style="font-size: 36px; padding-top: 5px;">Manila Zoo</span>
         </a>
-        <div class="nav-links">
-            <a onclick="switchTab('view-animals')" class="nav-link nav-tab" data-target="view-animals">Our Animals</a>
-            <a onclick="switchTab('view-map')" class="nav-link nav-tab" data-target="view-map">Interactive Map</a>
-            <a onclick="switchTab('view-conservation')" class="nav-link nav-tab"
+        <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+        <div class="nav-links" id="nav-links">
+            <a onclick="switchTab('view-animals'); closeMobileMenu();" class="nav-link nav-tab" data-target="view-animals">Our Animals</a>
+            <a onclick="switchTab('view-map'); closeMobileMenu();" class="nav-link nav-tab" data-target="view-map">Interactive Map</a>
+            <a onclick="switchTab('view-conservation'); closeMobileMenu();" class="nav-link nav-tab"
                 data-target="view-conservation">Conservation</a>
-            <button onclick="switchTab('view-tickets')" class="btn-ticket">Buy Tickets</button>
+            <button onclick="switchTab('view-tickets'); closeMobileMenu();" class="btn-ticket">Buy Tickets</button>
         </div>
     </nav>
 
@@ -1753,6 +2186,7 @@
                         <div class="pin" id="pin-reptiles" onclick="showZone('reptiles')"></div>
                     </div>
                     <div class="map-popup" id="info-popup">
+                        <span class="popup-close" onclick="document.getElementById('info-popup').classList.remove('show')">&times;</span>
                         <div class="popup-title" id="popup-title">Zone Name</div>
                         <div class="popup-animals" id="popup-animals">Key Species</div>
                         <div class="popup-desc" id="popup-desc">Zone description goes here.</div>
@@ -1771,7 +2205,7 @@
             <div class="mission-grid">
                 <div class="mission-card">
                     <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=800"
-                        class="mission-img">
+                        class="mission-img" alt="Urban Reforestation">
                     <div class="mission-content">
                         <h3 class="mission-title">Urban Reforestation</h3>
                         <p class="mission-text">Transforming Manila Zoo into a botanical sanctuary and carbon sink.</p>
@@ -1779,7 +2213,7 @@
                 </div>
                 <div class="mission-card">
                     <img src="https://images.unsplash.com/photo-1596401057633-54a8fe8ef647?q=80&w=800"
-                        class="mission-img">
+                        class="mission-img" alt="Species Breeding Program">
                     <div class="mission-content">
                         <h3 class="mission-title">Species Breeding</h3>
                         <p class="mission-text">Active breeding programs for the Tamaraw and Philippine Eagle.</p>
@@ -1787,7 +2221,7 @@
                 </div>
                 <div class="mission-card">
                     <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&w=800"
-                        class="mission-img">
+                        class="mission-img" alt="Next-Gen Education">
                     <div class="mission-content">
                         <h3 class="mission-title">Next-Gen Education</h3>
                         <p class="mission-text">Integrating AI to teach children about ecosystems.</p>
@@ -1884,6 +2318,12 @@
             } else {
                 if (window.leafInterval) { clearInterval(window.leafInterval); window.leafInterval = null; }
             }
+
+            if (tabId === 'view-tickets') {
+                if (!window.petInterval) { window.petInterval = setInterval(spawnZooPet, 3500); spawnZooPet(); }
+            } else {
+                if (window.petInterval) { clearInterval(window.petInterval); window.petInterval = null; }
+            }
         };
 
         // Init Load
@@ -1891,6 +2331,18 @@
             document.body.className = 'theme-transparent';
             const video = document.getElementById('hero-video');
             if (video) video.play().catch(e => console.log("Autoplay prevented"));
+
+            // Fix navbar visibility when scrolling past hero on home page
+            const homeView = document.getElementById('view-home');
+            homeView.addEventListener('scroll', () => {
+                if (!homeView.classList.contains('active')) return;
+                const hero = document.querySelector('.hero-container');
+                if (homeView.scrollTop > hero.offsetHeight - 80) {
+                    document.body.className = 'theme-light';
+                } else {
+                    document.body.className = 'theme-transparent';
+                }
+            });
         });
 
         // 2. MAP LOGIC
@@ -1982,6 +2434,19 @@
     </script>
 
     <script>
+        // MOBILE MENU TOGGLE
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const navLinks = document.getElementById('nav-links');
+        if (mobileBtn) {
+            mobileBtn.addEventListener('click', () => {
+                navLinks.classList.toggle('mobile-open');
+            });
+        }
+        function closeMobileMenu() {
+            navLinks.classList.remove('mobile-open');
+        }
+        window.closeMobileMenu = closeMobileMenu;
+
         // 4. SMART ITINERARY LOGIC
         function generateSmartItinerary() {
             const prompt = document.getElementById('ai-prompt').value.toLowerCase();
@@ -2084,7 +2549,7 @@
                 document.addEventListener('mouseup', mu);
             };
         }
-        setInterval(spawnZooPet, 3500); spawnZooPet();
+        // Interval managed by switchTab
 
         // 6. CONSERVATION LEAVES LOGIC
         const leaves = ['🍃', '🌿', '🌱'];
@@ -2102,7 +2567,6 @@
             document.getElementById('view-conservation').appendChild(leaf);
             setTimeout(() => { if (leaf.parentNode) leaf.remove(); }, duration * 1000);
         }
-        setInterval(spawnLeaf, 400);
     </script>
 </body>
 
