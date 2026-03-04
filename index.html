@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manila Zoo | The Next Generation</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Chewy&family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap"
         rel="stylesheet">
     <style>
         /* ==========================================================================
@@ -64,7 +65,6 @@
             }
         }
 
-        /* Background Colors per Section */
         #view-home {
             background-color: #faf9f6;
             color: #ffffff;
@@ -91,7 +91,20 @@
         }
 
         /* ==========================================================================
-           2. NAVIGATION BAR (Glassmorphism)
+           2. MANILA ZOO CUSTOM FONT & GRADIENT (NEW)
+           ========================================================================== */
+        .manila-font {
+            font-family: 'Chewy', cursive;
+            background: linear-gradient(90deg, #e83338 0%, #0060a9 22%, #ffc20e 45%, #008b8b 65%, #f37021 85%, #00adec 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+            letter-spacing: 2px;
+            line-height: 1.1;
+        }
+
+        /* ==========================================================================
+           3. NAVIGATION BAR
            ========================================================================== */
         .navbar {
             position: fixed;
@@ -111,20 +124,16 @@
         }
 
         .logo {
-            font-size: 24px;
-            font-weight: 800;
-            letter-spacing: 2px;
-            text-transform: uppercase;
             display: flex;
             align-items: center;
             gap: 10px;
-            color: #fff;
             text-decoration: none;
             cursor: pointer;
         }
 
         .logo-leaf {
             color: #10b981;
+            font-size: 24px;
         }
 
         .nav-links {
@@ -171,28 +180,21 @@
             box-shadow: 0 15px 30px rgba(16, 185, 129, 0.4);
         }
 
-        /* Theme Toggle for Navbar (Light/Dark Pages) */
+        /* --- NAVBAR BUG FIX: Force black text on white pages --- */
         body.theme-light .navbar {
             background: rgba(255, 255, 255, 0.95);
             border-bottom: 1px solid #e2e8f0;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
         }
 
-        body.theme-light .logo {
-            color: #111;
-        }
-
         body.theme-light .nav-link:not(.active-link) {
-            color: #4a5568;
+            color: #111;
+            font-weight: 800;
         }
 
         body.theme-dark .navbar {
             background: rgba(5, 11, 7, 0.9);
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        body.theme-dark .logo {
-            color: #fff;
         }
 
         body.theme-dark .nav-link:not(.active-link) {
@@ -204,18 +206,13 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        body.theme-transparent .logo {
-            color: #fff;
-        }
-
         body.theme-transparent .nav-link:not(.active-link) {
             color: #e2e8f0;
         }
 
         /* ==========================================================================
-           3. ALIGNMENT FIX 
+           4. ALIGNMENT FIX 
            ========================================================================== */
-
         .page-header {
             padding: 140px 60px 20px 60px;
             text-align: center;
@@ -241,9 +238,8 @@
         }
 
         /* ==========================================================================
-           4. INDEX.HTML (VIDEO STACKING FIX)
+           5. INDEX.HTML (HERO SECTION)
            ========================================================================== */
-
         .hero-container {
             position: relative;
             width: 100%;
@@ -256,7 +252,6 @@
             text-align: center;
             padding: 0 20px;
             background-color: #000;
-            /* Base background so video pops */
         }
 
         .video-bg {
@@ -269,7 +264,6 @@
             width: auto;
             height: auto;
             z-index: 1;
-            /* FIXED: Positive Z-Index so it doesn't hide behind SPA wall */
             object-fit: cover;
         }
 
@@ -281,10 +275,8 @@
             height: 100%;
             background: linear-gradient(180deg, rgba(5, 15, 10, 0.4) 0%, rgba(5, 15, 10, 0.9) 100%);
             z-index: 2;
-            /* FIXED: Sits just above the video */
         }
 
-        /* All hero text forced to top layer */
         .hero-subtitle,
         .hero-title,
         .hero-desc,
@@ -304,17 +296,12 @@
         }
 
         .hero-title {
-            font-size: 80px;
+            font-size: 70px;
             font-weight: 800;
             line-height: 1.1;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             letter-spacing: -2px;
             animation: fadeInUp 1.2s ease-out;
-        }
-
-        .hero-title span {
-            color: transparent;
-            -webkit-text-stroke: 2px #ffffff;
         }
 
         .hero-desc {
@@ -331,27 +318,48 @@
             animation: fadeInUp 1.6s ease-out;
         }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
+        /* --- APP SECTION & NEW CONTACT WIDGET --- */
         .app-section {
-            padding: 80px 10%;
+            padding: 80px 5%;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 80px;
+            gap: 60px;
+            /* Reduced gap to fit 3 columns */
             color: #111;
             background-color: #faf9f6;
             background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2310b981' fill-opacity='0.05'%3E%3Cpath d='M50 50c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10s-10-4.477-10-10 4.477-10 10-10zM10 10c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10S0 25.523 0 20s4.477-10 10-10zm10 8c4.418 0 8-3.582 8-8s-3.582-8-8-8-8 3.582-8 8 3.582 8 8 8zm40 40c4.418 0 8-3.582 8-8s-3.582-8-8-8-8 3.582-8 8 3.582 8 8 8z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .app-contact-info {
+            max-width: 280px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            text-align: left;
+        }
+
+        .app-contact-info h3 {
+            font-size: 22px;
+            font-weight: 800;
+            color: #050b07;
+            margin-bottom: 5px;
+            letter-spacing: -0.5px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            color: #4a5568;
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 1.5;
+        }
+
+        .contact-item svg {
+            flex-shrink: 0;
+            margin-top: 2px;
         }
 
         .phone-mockup {
@@ -438,7 +446,7 @@
         }
 
         .app-content {
-            max-width: 500px;
+            max-width: 450px;
         }
 
         .app-content h2 {
@@ -501,8 +509,8 @@
 
         .animal-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
         }
 
         .animal-card {
@@ -519,16 +527,18 @@
         .animal-card:hover {
             transform: translateY(-10px);
             border-color: rgba(16, 185, 129, 0.5);
+            box-shadow: 0 25px 50px rgba(16, 185, 129, 0.15);
         }
 
         .animal-img {
             width: 100%;
-            height: 280px;
+            height: 260px;
             object-fit: cover;
+            background-color: #e2e8f0;
         }
 
         .animal-data {
-            padding: 30px;
+            padding: 25px;
             display: flex;
             flex-direction: column;
             flex: 1;
@@ -570,8 +580,14 @@
             border: 1px solid rgba(59, 130, 246, 0.3);
         }
 
+        .status-least {
+            background: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
         .animal-name {
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 800;
             color: #111;
             margin-bottom: 5px;
@@ -613,13 +629,6 @@
             font-size: 14px;
             color: #111;
             font-weight: 800;
-        }
-
-        .spec-val span {
-            font-size: 12px;
-            color: #4a5568;
-            font-weight: 600;
-            display: block;
         }
 
         /* --- MAP.HTML STYLES --- */
@@ -709,15 +718,18 @@
 
         .map-wrapper {
             position: relative;
-            height: 95%;
-            aspect-ratio: 1.5;
+            max-width: 100%;
+            max-height: 90vh;
+            display: inline-block;
             transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
         .map-bg {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            max-width: 100%;
+            max-height: 85vh;
+            width: auto;
+            height: auto;
+            display: block;
             border-radius: 10px;
             box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
         }
@@ -765,43 +777,43 @@
         }
 
         #pin-aviary {
-            top: 21%;
-            left: 45%;
+            top: 30%;
+            left: 52%;
         }
 
         #pin-savanna {
-            top: 28%;
-            left: 72%;
+            top: 37%;
+            left: 68%;
         }
 
         #pin-predators {
-            top: 29%;
-            left: 59.5%;
+            top: 42%;
+            left: 58%;
         }
 
         #pin-hippos {
-            top: 34%;
-            left: 40.5%;
+            top: 45%;
+            left: 46%;
         }
 
         #pin-primates {
-            top: 40%;
+            top: 48%;
             left: 26%;
         }
 
         #pin-elephants {
-            top: 60%;
-            left: 65%;
+            top: 65%;
+            left: 62%;
         }
 
         #pin-island {
-            top: 52%;
-            left: 49%;
+            top: 63%;
+            left: 48%;
         }
 
         #pin-reptiles {
-            top: 31%;
-            left: 23%;
+            top: 65%;
+            left: 22%;
         }
 
         .map-popup {
@@ -1298,7 +1310,10 @@
 <body class="theme-transparent">
 
     <nav class="navbar" id="main-nav">
-        <a onclick="switchTab('view-home')" class="logo"><span class="logo-leaf">🌿</span> MANILA ZOO</a>
+        <a onclick="switchTab('view-home')" class="logo">
+            <span class="logo-leaf">🌿</span>
+            <span class="manila-font" style="font-size: 36px; padding-top: 5px;">Manila Zoo</span>
+        </a>
         <div class="nav-links">
             <a onclick="switchTab('view-animals')" class="nav-link nav-tab" data-target="view-animals">Our Animals</a>
             <a onclick="switchTab('view-map')" class="nav-link nav-tab" data-target="view-map">Interactive Map</a>
@@ -1319,7 +1334,11 @@
                 <div class="overlay"></div>
 
                 <div class="hero-subtitle">The Iconic Landmark, Reborn</div>
-                <div class="hero-title">Welcome to the New,<br><span>Manila Zoo.</span></div>
+                <div class="hero-title">Welcome to the New<br>
+                    <span class="manila-font"
+                        style="font-size: 130px; padding-top: 10px; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.8));">Manila
+                        Zoo</span>
+                </div>
                 <div class="hero-desc">After a massive, multi-billion peso redevelopment, the country's beloved wildlife
                     sanctuary is back. Experience world-class, glass-fronted habitats and our all-new AI smart park
                     features right in the heart of the city.</div>
@@ -1328,6 +1347,31 @@
             </section>
 
             <section class="app-section">
+                <div class="app-contact-info">
+                    <h3>Contact Us</h3>
+                    <div class="contact-item">
+                        <svg width="20" height="20" fill="#10b981" viewBox="0 0 24 24">
+                            <path
+                                d="M12 0c-4.198 0-8 3.403-8 7.602 0 4.198 3.469 9.21 8 16.398 4.531-7.188 8-12.2 8-16.398 0-4.199-3.801-7.602-8-7.602zm0 11c-1.657 0-3-1.343-3-3s1.343-3 3-3 3 1.343 3 3-1.343 3-3 3z" />
+                        </svg>
+                        <span>M. Adriatico St, Malate, Manila, 1004 Metro Manila</span>
+                    </div>
+                    <div class="contact-item">
+                        <svg width="20" height="20" fill="#10b981" viewBox="0 0 24 24">
+                            <path
+                                d="M0 3v18h24v-18h-24zm6.623 7.929l-4.623 5.712v-9.458l4.623 3.746zm-4.141-5.929h19.035l-9.517 7.713-9.518-7.713zm5.694 7.188l3.824 3.099 3.83-3.104 5.612 6.817h-18.779l5.513-6.812zm9.208-1.264l4.616-3.741v9.348l-4.616-5.607z" />
+                        </svg>
+                        <span>manilazoo@manila.gov.ph</span>
+                    </div>
+                    <div class="contact-item">
+                        <svg width="20" height="20" fill="#10b981" viewBox="0 0 24 24">
+                            <path
+                                d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.312h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z" />
+                        </svg>
+                        <span>Manila Zoo Official</span>
+                    </div>
+                </div>
+
                 <div class="phone-mockup">
                     <div class="phone-notch"></div>
                     <div class="phone-screen">
@@ -1367,9 +1411,9 @@
 
             <section class="section-animals">
                 <div class="animal-grid" id="grid">
-                    <div class="animal-card"><img
-                            src="https://upload.wikimedia.org/wikipedia/commons/c/c9/Philippine_Eagle_%28Pithecophaga_jefferyi%29.jpg"
-                            class="animal-img">
+
+                    <div class="animal-card">
+                        <img src="assets/eagle.png" class="animal-img" alt="Philippine Eagle">
                         <div class="animal-data">
                             <div class="status-badge status-critical">Critically Endangered</div>
                             <div class="animal-name">Philippine Eagle</div>
@@ -1387,9 +1431,8 @@
                         </div>
                     </div>
 
-                    <div class="animal-card"><img
-                            src="https://upload.wikimedia.org/wikipedia/commons/3/36/Tamaraw_Mindoro_Dwarf_Buffalo.jpg"
-                            class="animal-img">
+                    <div class="animal-card">
+                        <img src="assets/tamaraw.png" class="animal-img" alt="Tamaraw">
                         <div class="animal-data">
                             <div class="status-badge status-critical">Critically Endangered</div>
                             <div class="animal-name">Tamaraw</div>
@@ -1407,9 +1450,8 @@
                         </div>
                     </div>
 
-                    <div class="animal-card"><img
-                            src="https://upload.wikimedia.org/wikipedia/commons/8/82/Saltwater_Crocodile_at_Cairns.jpg"
-                            class="animal-img">
+                    <div class="animal-card">
+                        <img src="assets/saltwater-croc.png" class="animal-img" alt="Saltwater Crocodile">
                         <div class="animal-data">
                             <div class="status-badge status-vulnerable">Vulnerable</div>
                             <div class="animal-name">Saltwater Crocodile</div>
@@ -1427,9 +1469,8 @@
                         </div>
                     </div>
 
-                    <div class="animal-card"><img
-                            src="https://upload.wikimedia.org/wikipedia/commons/3/37/Asian_Elephant_in_a_dry_forest.jpg"
-                            class="animal-img">
+                    <div class="animal-card">
+                        <img src="assets/elephant.png" class="animal-img" alt="Asian Elephant">
                         <div class="animal-data">
                             <div class="status-badge status-endangered">Endangered</div>
                             <div class="animal-name">Asian Elephant</div>
@@ -1447,9 +1488,8 @@
                         </div>
                     </div>
 
-                    <div class="animal-card"><img
-                            src="https://upload.wikimedia.org/wikipedia/commons/7/73/Lion_waiting_in_Namibia.jpg"
-                            class="animal-img">
+                    <div class="animal-card">
+                        <img src="assets/lion.png" class="animal-img" alt="African Lion">
                         <div class="animal-data">
                             <div class="status-badge status-vulnerable">Vulnerable</div>
                             <div class="animal-name">African Lion</div>
@@ -1467,9 +1507,8 @@
                         </div>
                     </div>
 
-                    <div class="animal-card"><img
-                            src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Giraffe_Mikumi_National_Park.jpg"
-                            class="animal-img">
+                    <div class="animal-card">
+                        <img src="assets/giraffe.jpeg" class="animal-img" alt="Reticulated Giraffe">
                         <div class="animal-data">
                             <div class="status-badge status-endangered">Endangered</div>
                             <div class="animal-name">Reticulated Giraffe</div>
@@ -1487,9 +1526,8 @@
                         </div>
                     </div>
 
-                    <div class="animal-card"><img
-                            src="https://upload.wikimedia.org/wikipedia/commons/8/8b/Zebras_Etosha.jpg"
-                            class="animal-img">
+                    <div class="animal-card">
+                        <img src="assets/zebra.jpeg" class="animal-img" alt="Plains Zebra">
                         <div class="animal-data">
                             <div class="status-badge status-near">Near Threatened</div>
                             <div class="animal-name">Plains Zebra</div>
@@ -1507,9 +1545,8 @@
                         </div>
                     </div>
 
-                    <div class="animal-card"><img
-                            src="https://upload.wikimedia.org/wikipedia/commons/f/f2/Hippopotamus_amphibius_in_Tanzania.jpg"
-                            class="animal-img">
+                    <div class="animal-card">
+                        <img src="assets/hippo.jpeg" class="animal-img" alt="Hippopotamus">
                         <div class="animal-data">
                             <div class="status-badge status-vulnerable">Vulnerable</div>
                             <div class="animal-name">Hippopotamus</div>
@@ -1527,9 +1564,8 @@
                         </div>
                     </div>
 
-                    <div class="animal-card"><img
-                            src="https://upload.wikimedia.org/wikipedia/commons/c/c2/Crab-eating_macaque_-_Macaca_fascicularis.jpg"
-                            class="animal-img">
+                    <div class="animal-card">
+                        <img src="assets/macaque.jpeg" class="animal-img" alt="Long-tailed Macaque">
                         <div class="animal-data">
                             <div class="status-badge status-endangered">Endangered</div>
                             <div class="animal-name">Long-tailed Macaque</div>
@@ -1546,6 +1582,121 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="animal-card">
+                        <img src="assets/tiger.png" class="animal-img" alt="Bengal Tiger">
+                        <div class="animal-data">
+                            <div class="status-badge status-endangered">Endangered</div>
+                            <div class="animal-name">Bengal Tiger</div>
+                            <div class="animal-sci">Panthera tigris tigris</div>
+                            <div class="animal-specs">
+                                <div class="spec-item"><span class="spec-label">Diet</span><span
+                                        class="spec-val">Carnivore</span></div>
+                                <div class="spec-item"><span class="spec-label">Habitat</span><span
+                                        class="spec-val">Tropical Forests</span></div>
+                                <div class="spec-item"><span class="spec-label">Feature</span><span
+                                        class="spec-val">Powerful Swimmer</span></div>
+                                <div class="spec-item"><span class="spec-label">Zone</span><span class="spec-val"
+                                        style="color: #10b981;">Zone 6: Predators</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="animal-card">
+                        <img src="assets/white-tiger.png" class="animal-img" alt="White Siberian Tiger">
+                        <div class="animal-data">
+                            <div class="status-badge status-endangered">Endangered</div>
+                            <div class="animal-name">White Tiger (Kois)</div>
+                            <div class="animal-sci">Panthera tigris altaica</div>
+                            <div class="animal-specs">
+                                <div class="spec-item"><span class="spec-label">Diet</span><span
+                                        class="spec-val">Carnivore</span></div>
+                                <div class="spec-item"><span class="spec-label">Habitat</span><span
+                                        class="spec-val">Cold Forests</span></div>
+                                <div class="spec-item"><span class="spec-label">Feature</span><span
+                                        class="spec-val">Rare White Coat</span></div>
+                                <div class="spec-item"><span class="spec-label">Zone</span><span class="spec-val"
+                                        style="color: #10b981;">Zone 6: Predators</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="animal-card">
+                        <img src="assets/ostrich.png" class="animal-img" alt="Ostrich">
+                        <div class="animal-data">
+                            <div class="status-badge status-least">Least Concern</div>
+                            <div class="animal-name">Common Ostrich</div>
+                            <div class="animal-sci">Struthio camelus</div>
+                            <div class="animal-specs">
+                                <div class="spec-item"><span class="spec-label">Diet</span><span
+                                        class="spec-val">Omnivore</span></div>
+                                <div class="spec-item"><span class="spec-label">Habitat</span><span
+                                        class="spec-val">Savanna</span></div>
+                                <div class="spec-item"><span class="spec-label">Top Speed</span><span
+                                        class="spec-val">70 km/h</span></div>
+                                <div class="spec-item"><span class="spec-label">Zone</span><span class="spec-val"
+                                        style="color: #10b981;">Zone 3: Aviary</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="animal-card">
+                        <img src="assets/warty-pig.png" class="animal-img" alt="Visayan Warty Pig">
+                        <div class="animal-data">
+                            <div class="status-badge status-critical">Critically Endangered</div>
+                            <div class="animal-name">Visayan Warty Pig</div>
+                            <div class="animal-sci">Sus cebifrons</div>
+                            <div class="animal-specs">
+                                <div class="spec-item"><span class="spec-label">Diet</span><span
+                                        class="spec-val">Omnivore</span></div>
+                                <div class="spec-item"><span class="spec-label">Habitat</span><span
+                                        class="spec-val">Forests</span></div>
+                                <div class="spec-item"><span class="spec-label">Feature</span><span
+                                        class="spec-val">Distinctive Mane</span></div>
+                                <div class="spec-item"><span class="spec-label">Zone</span><span class="spec-val"
+                                        style="color: #10b981;">Zone 9</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="animal-card">
+                        <img src="assets/phil-croc.png" class="animal-img" alt="Philippine Crocodile">
+                        <div class="animal-data">
+                            <div class="status-badge status-critical">Critically Endangered</div>
+                            <div class="animal-name">Philippine Crocodile</div>
+                            <div class="animal-sci">Crocodylus mindorensis</div>
+                            <div class="animal-specs">
+                                <div class="spec-item"><span class="spec-label">Diet</span><span
+                                        class="spec-val">Carnivore</span></div>
+                                <div class="spec-item"><span class="spec-label">Habitat</span><span
+                                        class="spec-val">Freshwater</span></div>
+                                <div class="spec-item"><span class="spec-label">Population</span><span
+                                        class="spec-val">~250 Remaining</span></div>
+                                <div class="spec-item"><span class="spec-label">Zone</span><span class="spec-val"
+                                        style="color: #10b981;">Zone 8: Reptiles</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="animal-card">
+                        <img src="assets/cassowary.png" class="animal-img" alt="Southern Cassowary">
+                        <div class="animal-data">
+                            <div class="status-badge status-least">Least Concern</div>
+                            <div class="animal-name">Southern Cassowary</div>
+                            <div class="animal-sci">Casuarius casuarius</div>
+                            <div class="animal-specs">
+                                <div class="spec-item"><span class="spec-label">Diet</span><span
+                                        class="spec-val">Frugivore</span></div>
+                                <div class="spec-item"><span class="spec-label">Habitat</span><span
+                                        class="spec-val">Rainforest</span></div>
+                                <div class="spec-item"><span class="spec-label">Feature</span><span
+                                        class="spec-val">Casque on head</span></div>
+                                <div class="spec-item"><span class="spec-label">Zone</span><span class="spec-val"
+                                        style="color: #10b981;">Zone 3: Aviary</span></div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </section>
         </section>
@@ -1618,24 +1769,24 @@
             </header>
 
             <div class="mission-grid">
-                <div class="mission-card"><img
-                        src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=800"
+                <div class="mission-card">
+                    <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=800"
                         class="mission-img">
                     <div class="mission-content">
                         <h3 class="mission-title">Urban Reforestation</h3>
                         <p class="mission-text">Transforming Manila Zoo into a botanical sanctuary and carbon sink.</p>
                     </div>
                 </div>
-                <div class="mission-card"><img
-                        src="https://images.unsplash.com/photo-1596401057633-54a8fe8ef647?q=80&w=800"
+                <div class="mission-card">
+                    <img src="https://images.unsplash.com/photo-1596401057633-54a8fe8ef647?q=80&w=800"
                         class="mission-img">
                     <div class="mission-content">
                         <h3 class="mission-title">Species Breeding</h3>
                         <p class="mission-text">Active breeding programs for the Tamaraw and Philippine Eagle.</p>
                     </div>
                 </div>
-                <div class="mission-card"><img
-                        src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&w=800"
+                <div class="mission-card">
+                    <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&w=800"
                         class="mission-img">
                     <div class="mission-content">
                         <h3 class="mission-title">Next-Gen Education</h3>
@@ -1703,33 +1854,31 @@
     <script type="module">
         import { Conversation } from 'https://cdn.jsdelivr.net/npm/@11labs/client/+esm';
 
-        // 1. SPA TAB SWITCHER (Keeps Maria alive!)
+        // 1. SPA TAB SWITCHER (FIXED LOGIC)
         window.switchTab = function (tabId) {
             document.querySelectorAll('.view-section').forEach(v => v.classList.remove('active'));
-            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active-link'));
 
             const target = document.getElementById(tabId);
             if (target) target.classList.add('active');
 
-            const tabMap = { 'view-animals': 'tab-animals', 'view-map': 'tab-map', 'view-conservation': 'tab-conservation', 'view-tickets': 'tab-tickets' };
-            if (tabMap[tabId]) document.getElementById(tabMap[tabId]).classList.add('active');
+            const navTarget = document.querySelector(`[data-target="${tabId}"]`);
+            if (navTarget) navTarget.classList.add('active-link');
 
-            // Toggle body class for Navbar styling
+            // --- BUG FIX: Now perfectly triggers the CSS to turn text black on white pages ---
             if (tabId === 'view-map') {
-                document.body.className = 'theme-dark-map';
+                document.body.className = 'theme-dark';
             } else if (tabId === 'view-home') {
-                document.body.className = 'theme-dark-home';
+                document.body.className = 'theme-transparent';
             } else {
                 document.body.className = 'theme-light';
             }
 
-            // Force Video to Play when on Home Tab
             const video = document.getElementById('hero-video');
             if (tabId === 'view-home' && video) {
                 video.play().catch(e => console.log("Autoplay prevented by browser"));
             }
 
-            // Conservation Leaves Logic
             if (tabId === 'view-conservation') {
                 if (!window.leafInterval) window.leafInterval = setInterval(spawnLeaf, 400);
             } else {
@@ -1737,9 +1886,9 @@
             }
         };
 
-        // Initialize Theme on Load
+        // Init Load
         document.addEventListener("DOMContentLoaded", () => {
-            document.body.className = 'theme-dark-home';
+            document.body.className = 'theme-transparent';
             const video = document.getElementById('hero-video');
             if (video) video.play().catch(e => console.log("Autoplay prevented"));
         });
@@ -1772,13 +1921,13 @@
             return "Displaying " + data.title;
         };
 
-        // 3. AI SDK LOGIC (WHITELABELED)
+        // 3. AI SDK LOGIC
         let session = null;
         let isConnected = false;
         const btn = document.getElementById('ai-ranger-btn');
         const dot = btn.querySelector('.pulse-dot');
         const text = document.getElementById('btn-text');
-        const agentId = 'agent_4101kj9n39wqfv7v5ryfjav51mkv';
+        const agentId = 'YOUR_AGENT_ID'; // REPLACE WITH YOUR AGENT ID
 
         btn.onclick = async () => {
             if (isConnected) {
@@ -1886,7 +2035,6 @@
         const track = document.getElementById('animal-track');
 
         function spawnZooPet() {
-            // Only spawn if Tickets view is active
             if (!document.getElementById('view-tickets').classList.contains('active')) return;
 
             const pet = document.createElement('div');
@@ -1941,7 +2089,6 @@
         // 6. CONSERVATION LEAVES LOGIC
         const leaves = ['🍃', '🌿', '🌱'];
         function spawnLeaf() {
-            // Only spawn if Conservation view is active
             if (!document.getElementById('view-conservation').classList.contains('active')) return;
 
             const leaf = document.createElement('div');
@@ -1952,7 +2099,6 @@
             const duration = Math.random() * 5 + 5;
             leaf.style.animationDuration = duration + 's, 3s';
 
-            // Append to absolute view so it doesn't break scrolling
             document.getElementById('view-conservation').appendChild(leaf);
             setTimeout(() => { if (leaf.parentNode) leaf.remove(); }, duration * 1000);
         }
